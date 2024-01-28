@@ -9,5 +9,5 @@ docker run -d -t -i \
 -e SPEEDPORT_KEY=cdc0cac1280b516e674f0057e4929bca84447cca8425007e33a88a5cf598a190 \
 -e SPEEDPORT_FORMAT=json \
 --mount type=bind,source="./telegraf.conf",target=/etc/telegraf/telegraf.conf,readonly \
---name speedport-monitoring speedport-monitoring
+--name telegraf-speedport telegraf-speedport
 

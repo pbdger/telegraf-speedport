@@ -3,6 +3,18 @@ Telegraf docker image plus Python script to fetch Sppedport Smart4 metrics.
 
 ### Usage for test purpose
 
+* Create Python environment for local test - not required for a docker image creation
+```
+python3 -m venv .venv
+pip install -r requirements.txt 
+```
+#### Create docker image
+
+```
+docker build . --platform "linux/amd64" -t telegraf-speedport:1.1
+```
+
+#### Test docker image
 * Set Environment variables in file docker_run.sh
 * Execute docker_run.sh
 * Metric data will be shown in your InfluxDB
