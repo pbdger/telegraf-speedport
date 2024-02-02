@@ -16,9 +16,7 @@ FORMAT_RAW = 'raw'
 
 OUTPUT_FORMATS = [FORMAT_JSON, FORMAT_INFLUXDB, FORMAT_RAW]
 
-DEFAULT_HOSTNAME = '192.168.12.6'
-DEFAULT_PORT = 80
-DEFAULT_PROTOCOL = 'http'
+DEFAULT_URL = 'http://192.168.2.1'
 DEFAULT_KEY = 'cdc0cac1280b516e674f0057e4929bca84447cca8425007e33a88a5cf598a190'
 STATUS_ROUTE = '/data/Status.json'
 
@@ -115,12 +113,12 @@ def get_field(report, name, divide_by_thousand=False):
     return field['varvalue']
 
 
-def get_vdsl_status(hostname, protocol, port, key, raw=False, divide_by_thousand=False, return_error=False):
-    url = "%s://%s:%i%s" % (protocol, hostname, port, STATUS_ROUTE)
-    report, error_msg = http_get_encrypted_json(key, url)
+def get_vdsl_status(url, key, raw=False, divide_by_thousand=False, return_error=False):
+    urlComplete = "%s%s" % (url, STATUS_ROUTE)
+    report, error_msg = http_get_encrypted_json(key, urlComplete)
 
     if not report:
-        eprint("Failed to get status from %s" % url)
+        eprint("Failed to get status from %s" % urlComplete)
         if return_error:
             if raw:
                 return ''
@@ -168,19 +166,14 @@ def eprint(*args, **kwargs):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--SPEEDPORT_HOSTNAME", default=DEFAULT_HOSTNAME,
-                        help="Specify hostname or IP address (defaults to %s)" % DEFAULT_HOSTNAME)
-    parser.add_argument("--SPEEDPORT_PROTOCOL", default=DEFAULT_PROTOCOL,
-                        help="Specify protocol (defaults to %s" % DEFAULT_PROTOCOL)
-    parser.add_argument("--SPEEDPORT_PORT", default=DEFAULT_PORT, type=int,
-                        help="Specify port (defaults to %i" % DEFAULT_PORT)
+    parser.add_argument("--SPEEDPORT_URL", default=DEFAULT_URL,
+                        help="Specify URL (defaults to %s)" % DEFAULT_URL)
     parser.add_argument("--SPEEDPORT_KEY", default=DEFAULT_KEY,
                         help="Specify key for AES decryption (defaults to %s)" % DEFAULT_KEY)
 
     params = parser.parse_args()
 
-    status = get_vdsl_status(params.SPEEDPORT_HOSTNAME, params.SPEEDPORT_PROTOCOL, params.SPEEDPORT_PORT,
-                             params.SPEEDPORT_KEY)
+    status = get_vdsl_status(params.SPEEDPORT_URL, params.SPEEDPORT_KEY)
 
     if not status: exit(1)
 

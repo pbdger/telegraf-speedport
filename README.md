@@ -21,7 +21,7 @@ docker build . --platform "linux/amd64" -t telegraf-speedport:1.1
 
 ### Docker-Image
 
-An out of the box image can be found on https://hub.docker.com/repository/docker/pbdger/telegraf-speedport/general
+An out-of-the-box image can be found on https://hub.docker.com/repository/docker/pbdger/telegraf-speedport/general
 
 ### Simple dashboard example
 
