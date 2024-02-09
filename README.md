@@ -11,13 +11,19 @@ pip install -r requirements.txt
 #### Create docker image
 
 ```
-docker build . --platform "linux/amd64" -t telegraf-speedport:1.1
+docker build . --platform "linux/amd64" -t pbdger/telegraf-speedport:1.2.1
 ```
 
 #### Test docker image
 * Set Environment variables in file docker_run.sh
 * Execute docker_run.sh
 * Metric data will be shown in your InfluxDB
+
+#### Push docker image
+
+```
+docker push pbdger/telegraf-speedport:1.2.1
+```
 
 ### Docker-Image
 
