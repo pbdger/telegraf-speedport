@@ -16,7 +16,7 @@ FORMAT_RAW = 'raw'
 
 OUTPUT_FORMATS = [FORMAT_JSON, FORMAT_INFLUXDB, FORMAT_RAW]
 
-DEFAULT_URL = 'http://192.168.2.1'
+DEFAULT_URL = 'https://speedport.ip'
 DEFAULT_KEY = 'cdc0cac1280b516e674f0057e4929bca84447cca8425007e33a88a5cf598a190'
 STATUS_ROUTE = '/data/Status.json'
 
@@ -101,6 +101,8 @@ def decrypt_response(keyHex, data):
 
 def get_field(report, name, divide_by_thousand=False):
     field = next((x for x in report if x['varid'] == name), None)
+    if field is None:
+        return 0
     if name in BPS_FIELD:
         value = int(field['varvalue'])
         if divide_by_thousand:
